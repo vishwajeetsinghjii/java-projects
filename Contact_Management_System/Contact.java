@@ -9,6 +9,9 @@ public class Contact {
         this.phone = phone;
     }
 
+    public void setPhone(String phone){
+        this.phone = phone;
+    }
     public String getName(){
         return name;
     }

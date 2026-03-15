@@ -12,7 +12,8 @@ public class Main {
             System.out.println("2. View Contacts");
             System.out.println("3. Search Contacts");
             System.out.println("4. Delete Contact");
-            System.out.println("5. Exit");
+            System.out.println("5. Edit Contact");
+            System.out.println("6. Exit");
 
             int choice = sc.nextInt();
             sc.nextLine();
@@ -20,11 +21,22 @@ public class Main {
             switch (choice){
 
                 case 1:
-                    System.out.println("Enter name : ");
-                    String name = sc.nextLine();
-                    System.out.println("Enter phone");
-                    String phone = sc.nextLine();
-                    manager.addContact(name,phone);
+                    while(true) {
+
+                        System.out.println("Enter name : ");
+                        String name = sc.nextLine();
+
+                        if(manager.contactExists(name)) {
+                            System.out.println("Contact already exists. Try again with different name...");
+                            continue;
+                        }
+
+                        System.out.println("Enter phone : ");
+                        String phone = sc.nextLine();
+
+                        manager.addContact(name, phone);
+                        break;
+                    }
                     break;
 
                 case 2:
@@ -44,6 +56,15 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("Enter the name : ");
+                    String ename = sc.nextLine();
+                    manager.searchContact(ename);
+                    System.out.println("Enter the new number : ");
+                    String newphone = sc.nextLine();
+                    manager.editContact(ename,newphone);
+                    break;
+
+                case 6:
                     System.out.println("Exiting program...");
                     sc.close();
                     System.exit(0);
