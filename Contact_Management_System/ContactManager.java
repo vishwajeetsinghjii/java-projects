@@ -1,6 +1,10 @@
 package Contact_Management_System;
 
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
 
 public class ContactManager {
     ArrayList<Contact> contacts = new ArrayList<>();
@@ -20,7 +24,47 @@ public class ContactManager {
             return;
         }
         contacts.add(new Contact(name,phone));
+        saveContactsToFile();
         System.out.println("Contact added Successfully!");
+    }
+
+    void saveContactsToFile(){
+        try{
+            FileWriter fw = new FileWriter("Contact_Management_System/contacts.txt",true);
+
+            for(Contact c : contacts){
+                fw.write(c.getName() + " --> " + c.getPhone() + "\n");
+            }
+
+            fw.close();
+
+        } catch(IOException e){
+            System.out.println("Error saving contacts.");
+        }
+    }
+
+
+    void loadContactsFromFile(){
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader("Contact_Management_System/contacts.txt"));
+
+            String line;
+
+            while((line = reader.readLine()) != null){
+
+                String[] parts = line.split(",");
+
+                if(parts.length == 2){
+                    Contact c = new Contact(parts[0], parts[1]);
+                    contacts.add(c);
+                }
+            }
+
+            reader.close();
+
+        } catch(IOException e){
+            System.out.println("No existing contacts found.");
+        }
     }
 
     void viewContacts(){
@@ -47,6 +91,7 @@ public class ContactManager {
         for(Contact c : contacts){
             if(c.getName().equalsIgnoreCase(name)){
                 contacts.remove(c);
+                saveContactsToFile();
                 System.out.println("Contact deleted Successfully!");
                 return;
             }
@@ -58,6 +103,7 @@ public class ContactManager {
         for(Contact c : contacts){
             if(c.getName().equalsIgnoreCase(name)){
                 c.setPhone(newPhone);
+                saveContactsToFile();
                 System.out.println("Contact updated Successfully!");
                 return;
             }

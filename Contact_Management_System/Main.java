@@ -6,9 +6,10 @@ public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         ContactManager manager = new ContactManager();
+        manager.loadContactsFromFile();
 
         while(true){
-            System.out.println("\n 1. Add Contact");
+            System.out.println("\n1. Add Contact");
             System.out.println("2. View Contacts");
             System.out.println("3. Search Contacts");
             System.out.println("4. Delete Contact");
@@ -27,7 +28,7 @@ public class Main {
                         String name = sc.nextLine();
 
                         if(manager.contactExists(name)) {
-                            System.out.println("Contact already exists. Try again with different name...");
+                            System.out.println("Try again with different name...");
                             continue;
                         }
 
